@@ -1,12 +1,14 @@
 from keras.applications.vgg16 import VGG16
 from keras.preprocessing import image
-from keras.applications.resnet50 import preprocess_input, decode_predictions
+from keras.applications.vgg16 import preprocess_input, decode_predictions
+from keras.models import Model
 import numpy as np
 import os
 
 img_dir = 'images/'
 print("Loading model")
-model = VGG16(weights='imagenet', include_top=False)
+base_model = VGG16(weights='imagenet')
+model = Model(input=base_model.input, output=base_model.get_layer('fc1').output)
 
 
 def extract_features(img_path):
